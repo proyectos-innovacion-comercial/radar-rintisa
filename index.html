@@ -1843,6 +1843,165 @@ button[data-tip], .ins-rect { cursor: pointer; }
 .side-marca.con-img { background: #fff; padding: 0; overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 4px 14px oklch(0 0 0 / .08); }
 .side-marca.con-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
+
+/* v10 — Ficha de acción (modal) según referencia */
+.detail-sheet.fx { display: block; position: relative; max-width: 1180px; width: calc(100% - 64px); margin: 36px auto; padding: 26px 30px 22px; border-radius: 26px; }
+.fx-cerrar.detail-close { position: absolute; top: 22px; right: 22px; width: 42px; height: 42px; }
+.fx-cab { padding-right: 60px; margin-bottom: 18px; }
+.fx-miga { display: flex; align-items: center; gap: 12px; font: 700 12px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.fx-miga .radar-wordmark { font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.fx-miga i { font-style: normal; color: var(--line-2); }
+.fx-titulo { font: 800 clamp(24px, 2.6vw, 34px)/1.15 var(--sans); letter-spacing: -.035em; margin: 10px 0 14px; }
+.fx-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.fx-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--card); font-size: 13.5px; font-weight: 500; }
+.fx-chip.marca { background: var(--paper); border-color: transparent; font-weight: 600; }
+.fx-chip.marca i { width: 10px; height: 10px; border-radius: 50%; }
+.fx-fila1 { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 22px; align-items: start; }
+.fx-media { display: flex; flex-direction: column; gap: 12px; }
+.fx-foto { position: relative; aspect-ratio: 4/3.7; border-radius: 16px; overflow: hidden; background: var(--paper-2); }
+.fx-foto .poster { height: 100%; border-radius: 0; }
+.fx-foto .poster-img { object-fit: cover; }
+.fx-foto .chip-nuevo { top: 14px; right: 14px; font-family: var(--sans); font-size: 11px; padding: 6px 12px; }
+.fx-expandir { position: absolute; right: 14px; bottom: 14px; z-index: 4; width: 42px; height: 42px; border-radius: 50%; background: var(--card); color: var(--ink); display: grid; place-items: center; box-shadow: var(--shadow-md); transition: transform .2s; }
+.fx-expandir:hover { transform: scale(1.08); }
+.fx-media-pie { display: flex; align-items: center; gap: 12px; }
+.fx-portada { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 18px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--card); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.fx-portada:hover { background: var(--paper-2); }
+.fx-minis { display: flex; gap: 10px; flex: 1; min-width: 0; }
+.fx-mini { width: 84px; height: 56px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; flex-shrink: 0; opacity: .8; transition: opacity .2s, border-color .2s; }
+.fx-mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fx-mini.on, .fx-mini:hover { border-color: var(--teal); opacity: 1; }
+.fx-lado { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.fx-caja { background: var(--paper); border-radius: 18px; padding: 18px 26px; }
+.fx-eti { font: 700 12px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 8px; }
+.fx-fila { display: grid; grid-template-columns: minmax(110px, 1fr) minmax(0, 1fr); gap: 14px; padding: 8px 4px; border-bottom: 1px solid var(--line); font-size: 14.5px; align-items: center; }
+.fx-fila:last-child { border-bottom: 0; }
+.fx-fila dt { color: var(--ink-3); }
+.fx-fila dd { color: var(--ink); overflow-wrap: anywhere; }
+.fx-ubic-cuerpo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 22px; align-items: center; }
+.fx-mapa { height: 116px; border-radius: 10px; overflow: hidden; background: var(--paper-2); border: 1px solid var(--line); }
+.fx-mapa iframe { width: 100%; height: 100%; border: 0; display: block; }
+.fx-mapa.vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--teal-ink); font-size: 12.5px; font-weight: 600; background: color-mix(in oklch, var(--teal) 7%, var(--card)); }
+.fx-ubic-txt p { display: flex; gap: 10px; align-items: flex-start; font-size: 15.5px; line-height: 1.4; margin-bottom: 14px; }
+.fx-pin { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+.fx-ver { display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; border-radius: 10px; border: 1.5px solid var(--teal); color: var(--teal-ink); font-weight: 600; font-size: 14.5px; transition: background .2s; }
+.fx-ver:hover { background: var(--signal-soft); }
+.fx-desc { margin-top: 16px; }
+.fx-desc p { font-size: 15px; line-height: 1.6; color: var(--ink-2); white-space: pre-line; }
+.detail-sheet.fx .fd-cajas { margin-top: 14px; }
+.detail-sheet.fx .fd-caja { padding: 22px 24px; }
+.fx-pie { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.fx-pie-datos { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; font-size: 14px; }
+.fx-pie-datos small { color: var(--ink-3); font-size: 14px; margin-right: 20px; }
+.detail-sheet.fx .fd-descargar { width: auto; min-width: 210px; min-height: 46px; margin: 0; padding: 0 24px; }
+@media (max-width: 980px) {
+  .detail-sheet.fx { width: calc(100% - 20px); margin: 10px auto 30px; padding: 20px 16px; }
+  .fx-fila1, .fx-ubic-cuerpo, .detail-sheet.fx .fd-cajas { grid-template-columns: 1fr; }
+  .fx-caja { padding: 16px; } .fx-media-pie { flex-wrap: wrap; }
+  .detail-sheet.fx .fd-descargar { width: 100%; }
+}
+.fx-mini.rota { background: var(--paper-2); } .fx-mini.rota img { display: none; }
+
+/* v11 — Ficha: foto completa, sin huecos, mapa más amplio y escala compacta */
+.detail-sheet.fx { max-width: 1120px; padding: 22px 26px 18px; }
+.fx-titulo { font-size: clamp(22px, 2.2vw, 29px); margin: 8px 0 12px; }
+.fx-chip { padding: 6px 12px; font-size: 13px; }
+.fx-cab { margin-bottom: 16px; }
+.fx-fila1 { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 18px; align-items: stretch; }
+.fx-media { height: 100%; gap: 10px; }
+.fx-foto { flex: 1; aspect-ratio: auto; min-height: 320px; border-radius: 14px; background: #11181d; }
+.fx-img-wrap { position: absolute; inset: 0; }
+.fx-img-fondo { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(18px) brightness(.55); }
+.fx-img { position: relative; width: 100%; height: 100%; object-fit: contain; display: block; }
+.fx-foto > .poster { position: absolute; inset: 0; height: 100%; }
+.fx-portada { height: 44px; font-size: 13.5px; padding: 0 16px; }
+.fx-mini { width: 72px; height: 48px; }
+.fx-lado { gap: 14px; }
+.fx-caja { padding: 14px 20px; border-radius: 16px; }
+.fx-eti { font-size: 11px; margin-bottom: 6px; }
+.fx-fila { padding: 6px 2px; font-size: 13.5px; }
+.fx-ubic { flex: 1; display: flex; flex-direction: column; }
+.fx-ubic-cuerpo { grid-template-columns: 1fr; gap: 12px; flex: 1; align-content: start; }
+.fx-mapa { height: 180px; border-radius: 12px; }
+.fx-ubic-txt { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.fx-ubic-txt p { margin: 0; font-size: 14px; flex: 1; min-width: 180px; }
+.fx-ver { height: 40px; padding: 0 18px; font-size: 13.5px; flex-shrink: 0; }
+.fx-desc { margin-top: 14px; } .fx-desc p { font-size: 14px; }
+.detail-sheet.fx .fd-caja { padding: 18px 20px; }
+.detail-sheet.fx .fd-caja p { font-size: 13.5px; }
+.fx-pie { margin-top: 14px; padding-top: 12px; }
+.detail-sheet.fx .fd-descargar { min-height: 42px; font-size: 14px; }
+@media (max-width: 980px) { .fx-foto { min-height: 240px; } }
+
+/* v12 — ficha más angosta, tabla sin datos repetidos */
+.detail-sheet.fx { max-width: 1000px; }
+.fx-fila1 { grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.85fr); }
+.fx-fila { grid-template-columns: 82px minmax(0, 1fr); gap: 12px; padding: 9px 2px; }
+.fx-foto { min-height: 300px; }
+.fx-mapa { height: 150px; }
+.fx-ubic-txt { flex-direction: column; align-items: stretch; gap: 10px; }
+.fx-ubic-txt p { min-width: 0; }
+.fx-ver { justify-content: center; }
+
+/* v13 — Información en 2 columnas, ubicación solo mapa + botón */
+.fx-grid2 { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
+.fx-celda { padding: 9px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.fx-celda.ancho { grid-column: 1 / -1; border-bottom: 0; }
+.fx-celda dt { font-size: 11.5px; color: var(--ink-3); margin-bottom: 3px; }
+.fx-celda dd { font-size: 14px; color: var(--ink); font-weight: 600; overflow-wrap: anywhere; line-height: 1.35; }
+.fx-celda .fd-estado { font-size: 12px; padding: 3px 10px; }
+.fx-marca { display: inline-flex; align-items: center; gap: 7px; }
+.fx-marca i { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.fx-cab { margin-bottom: 14px; }
+.fx-titulo { margin-bottom: 0; }
+.fx-ubic-cuerpo { gap: 10px; }
+.fx-ubic .fx-mapa { height: auto; flex: 1; min-height: 140px; }
+.fx-ubic-cuerpo { display: flex; flex-direction: column; }
+.fx-ver { width: 100%; }
+.fx-ubic .fx-mapa { width: 100%; align-self: stretch; }
+
+/* v14 — lista de ubicaciones (⋯) */
+.fx-ubic { position: relative; }
+.fx-ubic-cab { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.fx-ubic-cab .fx-eti { margin: 0; }
+.fx-mas { display: inline-flex; align-items: center; justify-content: center; gap: 3px; width: 34px; height: 26px; border-radius: 8px; color: var(--ink-2); transition: background .2s; }
+.fx-mas i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.fx-mas:hover, .fx-mas:focus-visible { background: var(--paper-2); color: var(--teal-ink); }
+.fx-ubic-lista { position: absolute; top: 32px; right: 0; z-index: 20; width: min(320px, 80vw); max-height: 300px; overflow-y: auto; background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-lg); padding: 12px 14px; }
+.fx-ubic-lista[hidden] { display: none; }
+.fx-ubic-lista-cab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.fx-ubic-x { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; color: var(--ink-3); }
+.fx-ubic-x:hover { background: var(--paper-2); }
+.fx-ubic-lista ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.fx-ubic-lista li { display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 6px 4px; border-radius: 8px; }
+.fx-ubic-lista li:hover { background: var(--paper); }
+
+
+/* Ajustes verificados: foto completa, análisis legible y carga por ID. */
+.fx-foto { flex: none; width:100%; aspect-ratio:1/1; min-height:0; }
+.fx-media { height:auto; }
+.fx-minis { overflow-x:auto; padding-bottom:4px; }
+.fx-media-pie { flex-wrap:wrap; }
+.detail-sheet.fx .fd-caja p { font-size:16px; line-height:1.7; }
+.detail-sheet.fx .fd-caja { padding:24px; }
+.detail-sheet.fx .fd-caja h3 { font-size:13px; line-height:1.5; }
+.rf-panel[hidden] {display:none!important}
+.rf-panel {display:flex;flex-direction:column;gap:18px;min-width:0}
+.rf-panel input[type=file] {width:100%;padding:14px;border:1px solid var(--line-2);border-radius:12px}
+.rf-confirmar {display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6}
+.rf-confirmar input {width:18px;height:18px;flex:none;margin-top:3px;accent-color:var(--teal)}
+.rf-tabla {overflow:auto;max-height:400px;border:1px solid var(--line);border-radius:12px}
+.rf-tabla table {width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
+.rf-tabla th,.rf-tabla td {text-align:left;padding:12px;border-bottom:1px solid var(--line);max-width:280px;overflow-wrap:anywhere;vertical-align:top}
+.rf-tabla th {background:var(--paper);position:sticky;top:0}
+.rf-panel progress {width:100%;accent-color:var(--teal)}
+.rf-botones {display:flex;gap:12px;flex-wrap:wrap}
+.carga-modos {flex-wrap:wrap}
+@media(max-width:980px){.fx-fila1{grid-template-columns:minmax(0,1fr)}.fx-foto{min-height:0;max-width:580px;margin:auto}.detail-sheet.fx .fd-cajas{grid-template-columns:1fr}}
+@media(max-width:480px){.detail-sheet.fx .fd-caja{padding:20px}.fx-grid2{column-gap:12px}.rf-botones .btn{width:100%}}
+
+
+
 </style>
 <script>
 /*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -4915,85 +5074,115 @@ const sinDato = v => { const t = String(v == null ? "" : (Array.isArray(v) ? v.j
 const ubicacionMapeable = u => { const t = normMarca(u); return !!t && !/^(nacional|no aplica|no especificado|regional|peru|sin ubicacion|varios|-)$/.test(t); };
 
 function Detail(action, ctx) {
-  const related = V.actions
-    .filter(x => x.id !== action.id && (x.marca === action.marca || x.tipo === action.tipo))
-    .sort((a, b) => (b.marca === action.marca) - (a.marca === action.marca) || String(b.fecha).localeCompare(String(a.fecha)))
-    .slice(0, 3);
   const grupo = sinDato(action.grupo) || sinDato(V.brands[action.marca] && V.brands[action.marca].grupo);
+  const estado = sinDato(action.estado) || "Publicado";
+  const fechaCorta = action.fecha ? new Date(action.fecha + "T12:00:00").toLocaleDateString("es-PE", { day: "numeric", month: "short", year: "numeric" }).replace(".", "") : String(action.fechaLabel || "");
 
-  /* ---- portada ---- */
-  const hero = h("div", { class: "fd-hero" }, Poster(action, { size: "lg", label: true, encuadre: false }),
-    esNuevo(action) ? h("span", { class: "chip-nuevo", text: "NUEVO" }) : null);
-  const btnPortada = CONFIG.portada.habilitada && window.RadarAcceso.editor()
-    ? h("button", { class: "fd-portada", onclick: () => abrirEditorPortada(action, () => { hero.replaceChildren(Poster(action, { size: "lg", label: true, encuadre: false })); if(btnPortada)hero.appendChild(btnPortada); }) },
-        I("image", 15), action.imagen ? "Ajustar tarjeta" : "Agregar foto original")
-    : null;
-  if (btnPortada) hero.appendChild(btnPortada);
-
-  const caja = (cls, ico, titulo, texto, vacio) => h("section", { class: "fd-caja " + cls },
-    h("span", { class: "fd-caja-ico" }, Ico(ico, 18)),
-    h("div", {}, h("h3", { text: titulo }), h("p", { class: sinDato(texto) ? "" : "na-ph", text: sinDato(texto) || vacio })));
-
-  const descripcion = sinDato(action.descripcion);
-  const izq = h("div", { class: "fd-izq" },
-    hero,
-    h("div", { class: "fd-cuerpo" },
-      h("div", { class: "fd-meta" },
-        BrandLabel(action.marca),
-        h("span", { class: "badge", text: action.categoria }),
-        h("span", { class: "badge", text: action.tipo }),
-        h("span", { class: "fd-fecha", text: `${String(action.fechaLabel).toUpperCase()} · ${monthLabel(action.mes).toUpperCase()}` })),
-      h("h1", { class: "fd-titulo", text: action.titulo }),
-      descripcion ? h("p", { class: "fd-lede", text: descripcion }) : null,
-      h("div", { class: "fd-cajas" },
-        caja("hallazgo", "lapiz", "Hallazgo", action.resumen, "Hallazgo pendiente de registro."),
-        caja("insight", "bombilla", "Insight / estrategia para Rintisa", action.insight, "Insight / estrategia pendiente de registro.")),
-      related.length ? h("div", { class: "fd-rel" },
-        h("div", { class: "eyebrow", text: "Acciones relacionadas" }),
-        h("div", { class: "fd-rel-grid" }, ...related.map(x => h("button", { class: "fd-rel-it", onclick: () => ctx.onOpen(x) },
-          h("div", { class: "fd-rel-img" }, Poster(x, { label: false, size: "sm" })),
-          h("b", { text: `${x.marca} · ${x.tipo}` }),
-          h("span", { text: String(x.fechaLabel).toUpperCase() }))))) : null));
+  /* ---- foto principal + miniaturas ---- */
+  const galeria = [...new Set([action.imagen, ...(action.galeria || [])].filter(u => u && esUrl(u)))];
+  let actual = 0;
+  const foto = h("div", { class: "fx-foto" });
+  const pintarFoto = () => {
+    const url = galeria[actual];
+    let media;
+    if (url) {
+      const img = h("img", { class: "fx-img", src: url, alt: action.titulo || "Evidencia", decoding: "async" });
+      media = h("div", { class: "fx-img-wrap" }, h("div", { class: "fx-img-fondo", style: { backgroundImage: `url("${String(url).replace(/"/g, "%22")}")` } }), img);
+      img.addEventListener("error", () => media.replaceWith(Poster(action, { img: null, label: false, size: "lg" })));
+    } else media = Poster(action, { label: false, size: "lg" });
+    foto.replaceChildren(...[media,
+      esNuevo(action) ? h("span", { class: "chip-nuevo", text: "NUEVO" }) : null,
+      galeria.length ? h("button", { class: "fx-expandir", "aria-label": "Ver imagen ampliada", title: "Ver imagen ampliada",
+        onclick: () => abrirLightbox(galeria, actual, action.titulo) }, Ico("expandir", 18)) : null].filter(Boolean));
+    miniaturas.querySelectorAll(".fx-mini").forEach((m, i) => m.classList.toggle("on", i === actual));
+  };
+  const miniaturas = h("div", { class: "fx-minis" }, ...(galeria.length > 1 ? galeria.slice(0, 4).map((u, i) => h("button", {
+    class: "fx-mini", "aria-label": `Imagen ${i + 1}`, onclick: () => { actual = i; pintarFoto(); } }, h("img", { src: u, alt: "", loading: "lazy", onerror: e => { e.target.parentElement.classList.add("rota"); } }))) : []));
+  const editor = CONFIG.portada.habilitada && window.RadarAcceso.editor();
+  const btnPortada = editor ? h("button", { class: "fx-portada", onclick: () => abrirEditorPortada(action, () => {
+      if(action.imagen&&galeria[0]!==action.imagen)galeria.unshift(action.imagen); actual = 0; pintarFoto();
+      document.querySelectorAll('[data-encuadre-id]').forEach(img=>{if(img.dataset.encuadreId===action.id){img.src=action.imagen;aplicarEncuadreImagen(img,action.encuadreTarjeta);}}); }) }, I("image", 16), action.imagen ? "Ajustar tarjeta" : "Agregar foto original") : null;
+  pintarFoto();
 
   /* ---- información ---- */
-  const fila = (k, v, extra) => h("div", { class: "fd-spec" }, h("dt", { text: k }), h("dd", {}, v || h("span", { class: "na-ph", text: "Sin dato" }), extra || null));
-  const ubic = sinDato(action.ubicacion);
-  const link = sinDato(action.link);
-  const mapa = ubicacionMapeable(ubic)
-    ? h("div", { class: "fd-mapa" },
-        h("iframe", { title: `Mapa de ${ubic}`, loading: "lazy", referrerpolicy: "no-referrer-when-downgrade",
-          src: "https://www.google.com/maps?q=" + encodeURIComponent(ubic) + "&output=embed" }),
-        h("a", { class: "fd-mapa-abrir", href: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ubic), target: "_blank", rel: "noopener noreferrer" }, I("pin", 13), "Abrir en Google Maps"))
-    : null;
-  const estado = sinDato(action.estado) || "Publicado";
+  const fila = (k, v, ancho) => h("div", { class: "fx-celda" + (ancho ? " ancho" : "") }, h("dt", { text: k }), h("dd", {}, v || h("span", { class: "na-ph", text: "Sin dato" })));
+  const info = h("section", { class: "fx-caja fx-info" },
+    h("h2", { class: "fx-eti", text: "Información de la acción" }),
+    h("dl", { class: "fx-grid2" },
+      fila("Código", action.id),
+      fila("Estado", h("span", { class: "fd-estado", text: estado })),
+      fila("Marca", sinDato(action.marca) ? h("span", { class: "fx-marca" }, h("i", { style: { background: brandColor(action.marca, 0.6, 0.17) } }), action.marca) : ""),
+      fila("Grupo", grupo),
+      fila("Categoría", sinDato(action.categoria)),
+      fila("Tipo de acción", sinDato(action.tipo)),
+      fila("Canal", sinDato(action.canal)),
+      fila("Fecha", fechaCorta),
+      fila("SKU", sinDato(action.sku), true)));
 
-  const der = h("aside", { class: "fd-der" },
-    h("div", { class: "fd-info" },
-      h("h2", { class: "eyebrow", text: "Información" }),
-      h("dl", {},
-        fila("Código", action.id),
-        fila("Categoría", sinDato(action.categoria)),
-        fila("Tipo de acción", sinDato(action.tipo)),
-        fila("Estado", h("span", { class: "fd-estado", text: estado })),
-        fila("Marca", sinDato(action.marca)),
-        fila("Grupo", grupo),
-        fila("SKU", sinDato(action.sku)),
-        fila("Canal", sinDato(action.canal)),
-        fila("Ubicación", ubic ? h("span", { class: "fd-ubic" }, I("pin", 14), ubic) : "")),
-      mapa,
-      h("dl", {},
-        fila("Fuente", sinDato(action.fuente)),
-        fila("Fecha", sinDato(action.fecha)),
-        fila("Link", esUrl(link) ? h("a", { class: "fd-link", href: link, target: "_blank", rel: "noopener noreferrer" }, I("link", 14), "Ver enlace") : "")),
+  /* ---- ubicación ---- */
+  const ubic = sinDato(action.ubicacion);
+
+  const mapeable = ubicacionMapeable(ubic);
+  /* Lista detallada de ubicaciones (botón ⋯) */
+  const capital = t => { const x = String(t).trim().toLowerCase(); return x.charAt(0).toUpperCase() + x.slice(1); };
+  const partesUbic = ubic.split(";");
+  const zona = partesUbic.length > 1 ? capital(partesUbic[0]) : "";
+  const puntos = (partesUbic.length > 1 ? partesUbic.slice(1).join(",") : ubic).split(/[|\n;]/).map(x => x.replace(/\.$/, "").trim()).filter(Boolean).map(capital);
+  // Buscar cada punto por separado; una dirección con comas sigue siendo un solo punto.
+  const consultaPunto = punto => [punto.includes(',') ? punto : '"' + punto + '"', zona, /per[uú]/i.test(punto + ' ' + zona) ? '' : 'Perú'].filter(Boolean).join(', ');
+  const mapaPunto = punto => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(consultaPunto(punto));
+  const urlMaps = mapaPunto(puntos[0] || ubic);
+  const lista = h("div", { class: "fx-ubic-lista", hidden: "hidden", role: "dialog", "aria-label": "Detalle de ubicaciones" },
+    h("div", { class: "fx-ubic-lista-cab" },
+      h("b", { text: zona ? `${zona} · ${puntos.length} ${puntos.length === 1 ? "punto" : "puntos"}` : `${puntos.length} ${puntos.length === 1 ? "ubicación" : "ubicaciones"}` }),
+      h("button", { class: "fx-ubic-x", "aria-label": "Cerrar lista", onclick: e => { e.stopPropagation(); lista.hidden = true; } }, I("close", 14))),
+    h("ul", {}, ...puntos.map(x => h("li", {}, h("span", { class: "fx-pin" }, I("pin", 14)), h("a", { href: mapaPunto(x), target: "_blank", rel: "noopener noreferrer", text: x })))));
+  const btnLista = h("button", { class: "fx-mas", "aria-label": "Ver detalle de ubicaciones", title: "Ver detalle de ubicaciones",
+    onclick: e => { e.stopPropagation(); lista.hidden = !lista.hidden; } }, h("i"), h("i"), h("i"));
+  const cerrarLista = e => { if (!lista.hidden && !lista.contains(e.target) && e.target !== btnLista) lista.hidden = true; };
+  document.addEventListener("click", cerrarLista);
+  
+  const ubicacion = h("section", { class: "fx-caja fx-ubic" },
+    h("div", { class: "fx-ubic-cab" }, h("h2", { class: "fx-eti", text: "Ubicación" }), ubic ? btnLista : null, ubic ? lista : null),
+    h("div", { class: "fx-ubic-cuerpo" },
+      mapeable
+        ? h("div", { class: "fx-mapa" }, h("iframe", { title: `Mapa de ${ubic}`, loading: "lazy", referrerpolicy: "no-referrer-when-downgrade",
+            src: "https://www.google.com/maps?q=" + encodeURIComponent(consultaPunto(puntos[0] || ubic)) + "&z=16&output=embed" }))
+        : h("div", { class: "fx-mapa vacio" }, Ico("mundo", 30), h("span", { text: ubic ? "Alcance " + ubic.toLowerCase() : "Sin ubicación" })),
+      mapeable ? h("a", { class: "fx-ver", href: urlMaps, target: "_blank", rel: "noopener noreferrer" }, I("pin", 16), puntos.length > 1 ? "Buscar primer punto en Maps" : "Buscar este punto en Maps", Ico("externo", 15)) : null));
+
+  const caja = (cls, ico, titulo, texto, vacio) => h("section", { class: "fd-caja " + cls },
+    h("span", { class: "fd-caja-ico" }, Ico(ico, 20)),
+    h("div", {}, h("h3", { text: titulo }), h("p", { class: sinDato(texto) ? "" : "na-ph", text: sinDato(texto) || vacio })));
+
+  const link = sinDato(action.link);
+  const hoja = h("div", { class: "detail-sheet fx", role: "dialog", "aria-modal": "true", "aria-label": action.titulo },
+    h("header", { class: "fx-cab" },
+      h("div", { class: "fx-miga" }, h("span", { class: "radar-wordmark" }, "Radar ", h("strong", { text: "Rintisa" })), h("i", { text: "/" }), h("span", { text: "Ficha de acción" })),
+      h("h1", { class: "fx-titulo", text: action.titulo }),
+    ),
+    h("div", { class: "fx-fila1" },
+      h("div", { class: "fx-media" }, foto, (btnPortada || galeria.length > 1) ? h("div", { class: "fx-media-pie" }, btnPortada, miniaturas) : null),
+      h("div", { class: "fx-lado" }, info, ubicacion)),
+    sinDato(action.descripcion) ? h("section", { class: "fx-caja fx-desc" }, h("h2", { class: "fx-eti", text: "Descripción" }), h("p", { text: action.descripcion })) : null,
+    h("div", { class: "fd-cajas" },
+      caja("hallazgo", "lapiz", "Hallazgo", action.resumen, "Hallazgo pendiente de registro."),
+      caja("insight", "bombilla", "Insight / estrategia para Rintisa", action.insight, "Insight / estrategia pendiente de registro.")),
+    h("footer", { class: "fx-pie" },
+      h("div", { class: "fx-pie-datos" },
+        h("span", {}, h("small", { text: "Fuente" }), sinDato(action.fuente) || "—"),
+        esUrl(link) ? h("a", { class: "fd-link", href: link, target: "_blank", rel: "noopener noreferrer" }, I("link", 14), "Ver enlace de referencia") : null),
       h("button", { class: "fd-descargar", onclick: () => descargarFicha(action) }, Ico("descarga", 18), "Descargar ficha")));
 
-  const hoja = h("div", { class: "detail-sheet fd", role: "dialog", "aria-modal": "true", "aria-label": action.titulo }, izq, der);
-  const overlay = h("div", { class: "detail-overlay" },
-    h("button", { class: "detail-close", "aria-label": "Cerrar", onclick: () => ctx.onClose() }, I("close", 20)),
-    hoja);
+  const overlay = h("div", { class: "detail-overlay" }, hoja);
+  overlay.__limpiarDetalle = () => document.removeEventListener("click", cerrarLista);
+  hoja.prepend(h("button", { class: "detail-close fx-cerrar", "aria-label": "Cerrar", onclick: () => ctx.onClose() }, I("close", 20)));
   overlay.addEventListener("click", e => { if (e.target === overlay) ctx.onClose(); });
   return overlay;
 }
+ICO.calendario = ["M8 2v4", "M16 2v4", "M3 10h18", "M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"];
+ICO.expandir = ["M15 3h6v6", "M9 21H3v-6", "M21 3l-7 7", "M3 21l7-7"];
+ICO.externo = ["M15 3h6v6", "M10 14 21 3", "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"];
 
 ICO.lapiz = ["M12 20h9", "M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"];
 ICO.bombilla = ["M9 18h6", "M10 22h4", "M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2Z"];
