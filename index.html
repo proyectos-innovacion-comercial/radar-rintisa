@@ -4150,11 +4150,28 @@ function conteo(lista, fn) {
    PERÍODO compartido por Inicio e Insights
    ============================================================ */
 function periodo(ctx) {
-  const meses = V.months;
+  // El rango inicial abarca desde enero del año de la última edición.
+  // Incluye meses sin registros para que enero siempre pueda seleccionarse.
+  const meses = V.months.slice();
+  const referencia = V.currentMonth || (meses.length ? meses[meses.length - 1].key : "");
+  if (/^\d{4}-\d{2}$/.test(referencia)) {
+    const enero = referencia.slice(0, 4) + "-01";
+    const inicio = meses.length && meses[0].key < enero ? meses[0].key : enero;
+    const fin = meses.length && meses[meses.length - 1].key > referencia ? meses[meses.length - 1].key : referencia;
+    for (let y = Number(inicio.slice(0, 4)), m = Number(inicio.slice(5)); `${y}-${String(m).padStart(2, '0')}` <= fin; m === 12 ? (y++, m = 1) : m++) {
+      const key = `${y}-${String(m).padStart(2, '0')}`;
+      if (!meses.some(x => x.key === key)) {
+        const nombre = new Intl.DateTimeFormat('es-PE', {month:'long', timeZone:'UTC'}).format(new Date(Date.UTC(y, m - 1, 1)));
+        meses.push({key, label:nombre.charAt(0).toUpperCase() + nombre.slice(1), short:nombre.slice(0, 3), year:y});
+      }
+    }
+    meses.sort((a, b) => a.key.localeCompare(b.key));
+  }
   const keys = meses.map(m => m.key);
   let iD = keys.indexOf(ctx.rangoDesde), iH = keys.indexOf(ctx.rangoHasta);
   if (iH < 0) iH = keys.indexOf(V.currentMonth);
   if (iH < 0) iH = keys.length - 1;
+  if (iD < 0) iD = keys.indexOf((keys[iH] || referencia).slice(0, 4) + "-01");
   if (iD < 0 || iD > iH) iD = iH;
   const enRango = keys.slice(iD, iH + 1);
   const largo = enRango.length;
