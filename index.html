@@ -3920,6 +3920,7 @@ function BrandLabel(marca) {
 function ActionCard(action, onOpen, index = 0, onPortada = null) {
   const card = h("article", {
     class: "card" + (esNuevo(action) ? " es-nuevo" : ""),
+    "data-accion-id": String(action.id),
     tabindex: "0",
     role: "button",
     "aria-label": `Ver ficha: ${action.titulo}`,
@@ -5302,7 +5303,7 @@ tr:nth-child(odd) { background: #F3F7F8; }
 function Explorer(ctx) {
   const f = { mes: "", marca: "", categoria: "", tipo: "", canal: "", ...(ctx.filtros || {}) };
   let q = ctx.query || "";
-  let limite = CONFIG.datos.tamanoPagina;
+  let limite = Math.max(CONFIG.datos.tamanoPagina, ctx.explorerLimite || 0);
 
   const grid = h("div", { class: "grid", id: "grid-resultados" });
   const contador = h("span", { class: "result-count" });
@@ -5333,6 +5334,7 @@ function Explorer(ctx) {
   }
 
   function pintar(conEscaneo) {
+    ctx.setExplorerLimite(limite);
     const res = filtrar();
     contador.textContent = `${res.length} ${res.length === 1 ? "resultado" : "resultados"}`;
     grid.textContent = "";
@@ -5702,7 +5704,7 @@ function abrirEditorPortada(action, alGuardar) {
     }catch(error){aviso.textContent=error.message+' Si aún no actualizaste Apps Script, actualiza RadarRintisa.gs.';}
     finally{guardando=false;guardar.disabled=!lista;modo.disabled=false;cambiar.disabled=false;arriba.disabled=false;restablecer.disabled=false;pintar();}
   });
-  function cerrar(){if(guardando)return;document.removeEventListener('keydown',tecla,true);document.body.style.overflow=anterior;caja.remove();if(foco&&foco.isConnected)foco.focus();}
+  function cerrar(){if(guardando)return;document.removeEventListener('keydown',tecla,true);document.body.style.overflow=anterior;caja.remove();if(foco&&foco.isConnected)foco.focus({preventScroll:true});}
   function tecla(e){if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();cerrar();}}
   const caja=h('div',{class:'portada-overlay'},h('div',{class:'portada-panel enc-panel',role:'dialog','aria-modal':'true','aria-label':'Ajustar tarjeta'},
     h('div',{class:'portada-head'},h('div',{},h('div',{class:'eyebrow',text:'Solo cambia la presentación en Radar'}),h('h3',{text:'Ajustar tarjeta'})),h('button',{class:'icon-btn','aria-label':'Cerrar',onclick:cerrar},I('close',18))),
@@ -5710,7 +5712,7 @@ function abrirEditorPortada(action, alGuardar) {
       h('section',{class:'enc-ajustes'},h('span',{class:'badge',text:'Original protegido'}),h('p',{text:'Mueve la foto con el mouse o el dedo. El encuadre se aplica a la tarjeta; la imagen del detalle y el archivo de OneDrive conservan la foto completa.'}),h('label',{class:'campo'},h('span',{text:'Visualización'}),modo),
       ...[[zoom,'Zoom'],[horizontal,'Horizontal'],[vertical,'Vertical']].map(([input,text])=>h('label',{class:'campo'},h('span',{text}),input)),h('div',{class:'rf-botones'},arriba,restablecer),guardar,aviso,
       h('div',{class:'enc-reemplazo'},h('b',{text:'¿Quieres usar otra fotografía?'}),h('p',{text:'Esta opción sí reemplaza el archivo original en OneDrive.'}),cambiar)))));
-  caja.addEventListener('click',e=>{if(e.target===caja)cerrar();});document.body.style.overflow='hidden';document.body.appendChild(caja);document.addEventListener('keydown',tecla,true);pintar();vista.focus();
+  caja.addEventListener('click',e=>{if(e.target===caja)cerrar();});document.body.style.overflow='hidden';document.body.appendChild(caja);document.addEventListener('keydown',tecla,true);pintar();vista.focus({preventScroll:true});
   if(img.complete&&img.naturalWidth){lista=true;guardar.disabled=false;}
   return caja;
 }
@@ -6014,6 +6016,7 @@ const estado = {
   view: "home",
   filtros: {},
   query: "",
+  explorerLimite: CONFIG.datos.tamanoPagina,
   focusMonth: "",
   compareA: "",
   compareB: "",
@@ -6093,7 +6096,36 @@ function leerHash() {
   return { partes, params };
 }
 
-function aplicarHash() {
+// La ruta base y la posición pertenecen a la vista, no al modal de la ficha.
+let rutaVistaActual = null;
+let retornoDetalle = null;
+let restauracionScroll = 0;
+function posicionVista() {
+  return { x: window.scrollX || 0, y: window.scrollY || 0 };
+}
+function recordarRetornoDetalle() {
+  if (retornoDetalle) return;
+  retornoDetalle = {
+    hash: rutaVistaActual || "#/explorer",
+    posicion: posicionVista(),
+    foco: document.activeElement,
+    id: null,
+    volverConHistorial: !!rutaVistaActual
+  };
+}
+function restaurarVista(posicion, foco, id) {
+  const turno = ++restauracionScroll;
+  const aplicar = () => {
+    if (turno !== restauracionScroll) return;
+    const destino = foco && foco.isConnected ? foco :
+      (id ? [...document.querySelectorAll('.card[data-accion-id]')].find(c => c.dataset.accionId === String(id)) : null);
+    if (destino && destino.focus) destino.focus({ preventScroll: true });
+    window.scrollTo({ left: posicion.x, top: posicion.y, behavior: "instant" });
+  };
+  aplicar();
+  requestAnimationFrame(() => { aplicar(); requestAnimationFrame(aplicar); });
+}
+function aplicarHash(opciones = {}) {
   if(window.RadarFotos && window.RadarFotos.ocupada()) return;
   cerrarMenu();
   const { partes, params } = leerHash();
@@ -6102,25 +6134,40 @@ function aplicarHash() {
   if (primero === "accion" && partes[1]) {
     const encontrada = V && V.actions.find(a => String(a.id) === decodeURIComponent(partes[1]));
     if (encontrada) {
+      if (vistaPintada && !retornoDetalle) recordarRetornoDetalle();
       estado.detalle = encontrada;
       if (!vistaPintada) render(); else renderDetalle();
       return;
     }
   }
 
+  const ruta = location.hash || "#/home";
+  const mismaVista = vistaPintada && rutaVistaActual === ruta;
+  const retorno = retornoDetalle;
   estado.detalle = null;
   cerrarDetalle();
 
+  // Cerrar la ficha no desmonta el Explorador: conserva filtros, búsqueda,
+  // tarjetas ya cargadas y el mismo nodo al que vuelve el foco.
+  if (mismaVista && !opciones.refrescar) {
+    retornoDetalle = null;
+    if (retorno) restaurarVista(retorno.posicion, retorno.foco, retorno.id);
+    return;
+  }
   estado.view = VISTAS.includes(primero) ? primero : "home";
-  estado.filtros = {};
-  ["marca", "categoria", "tipo", "canal", "mes"].forEach(k => {
-    const v = params.get(k);
-    if (v) estado.filtros[k] = v;
-  });
-  estado.query = params.get("q") || "";
+  if (!mismaVista) {
+    estado.filtros = {};
+    ["marca", "categoria", "tipo", "canal", "mes"].forEach(k => {
+      const v = params.get(k);
+      if (v) estado.filtros[k] = v;
+    });
+    estado.query = params.get("q") || "";
+    estado.explorerLimite = CONFIG.datos.tamanoPagina;
+  }
   if (partes[0] === "timeline" && partes[1]) estado.focusMonth = partes[1];
-
-  render();
+  rutaVistaActual = ruta;
+  render({ conservarPosicion: mismaVista, posicion: retorno && retorno.posicion });
+  retornoDetalle = null;
 }
 
 function navegar(vista, filtros) {
@@ -6141,6 +6188,7 @@ const ctx = {
   get origen() { return API.estadoFuente.origen; },
   get filtros() { return estado.filtros; },
   get query() { return estado.query; },
+  get explorerLimite() { return estado.explorerLimite; },
   get focusMonth() { return estado.focusMonth || (V && V.currentMonth) || ""; },
   get compareA() { return estado.compareA; },
   get compareB() { return estado.compareB; },
@@ -6151,8 +6199,16 @@ const ctx = {
   get usuarioCorreo() { return (window.RadarAcceso.usuario && window.RadarAcceso.usuario()) || ""; },
 
   go: (vista, filtros) => navegar(vista, filtros),
-  onOpen: accion => { estado.detalle = accion; location.hash = `#/accion/${encodeURIComponent(accion.id)}`; },
-  onClose: () => { history.back(); },
+  onOpen: accion => {
+    recordarRetornoDetalle();
+    retornoDetalle.id = accion.id;
+    estado.detalle = accion;
+    location.hash = `#/accion/${encodeURIComponent(accion.id)}`;
+  },
+  onClose: () => {
+    if (retornoDetalle && retornoDetalle.volverConHistorial) history.back();
+    else navegar("explorer");
+  },
   onPortada: (accion, tarjeta) => UI.abrirEditorPortada(accion, () => {
     if (!tarjeta) return;
     const posterViejo = tarjeta.querySelector(".poster");
@@ -6169,6 +6225,7 @@ const ctx = {
   setRango: (desde, hasta) => { estado.rangoDesde = desde; estado.rangoHasta = hasta; render(); },
   sincronizar: () => sincronizar(true),
   setFiltros: (f, q) => { estado.filtros = { ...f }; estado.query = q; },
+  setExplorerLimite: limite => { estado.explorerLimite = limite; },
   setFocusMonth: mes => { estado.focusMonth = mes; render(); },
   setCompare: (a, b) => { estado.compareA = a; estado.compareB = b; },
   registrarRadar: r => { radarActivo = r; },
@@ -6195,9 +6252,12 @@ function renderChrome() {
 let capturaActual = null;
 
 let vistaPintada = false;   // true cuando la vista principal ya se dibujó con datos
-function render() {
+function render(opciones = {}) {
   const cont = root();
   if (!cont) return;
+  const posicion = opciones.conservarPosicion
+    ? (opciones.posicion || (retornoDetalle && retornoDetalle.posicion) || posicionVista()) : null;
+  ++restauracionScroll;
   vistaPintada = !estado.cargando && !estado.error;
   liberarVista();
   cont.textContent = "";
@@ -6245,12 +6305,14 @@ function render() {
   cont.appendChild(app);
 
   if (estado.detalle) renderDetalle();
-  window.scrollTo({ top: 0, behavior: Anim.movimientoActivo() ? "smooth" : "auto" });
+  if (posicion) restaurarVista(posicion);
+  else window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 let overlayDetalle = null;
 function renderDetalle() {
   if (!estado.detalle || !V) return;
+  const scrollFicha = overlayDetalle ? overlayDetalle.scrollTop : 0;
   cerrarDetalle();
   overlayDetalle = UI.Detail(estado.detalle, ctx);
   document.body.appendChild(overlayDetalle);
@@ -6259,7 +6321,8 @@ function renderDetalle() {
   document.addEventListener("keydown", onKey);
   overlayDetalle.__onKey = onKey;
   const cerrar = overlayDetalle.querySelector(".detail-close");
-  if (cerrar) cerrar.focus();
+  if (cerrar) cerrar.focus({ preventScroll: true });
+  overlayDetalle.scrollTop = scrollFicha;
 }
 
 function cerrarDetalle() {
@@ -6298,7 +6361,7 @@ async function sincronizar(forzar) {
       estado.compareB = V.months[V.months.length - 1].key;
     }
     estado.cargando = false;
-    aplicarHash();
+    aplicarHash({ refrescar: true });
     // Edición y carga de fotos desactivadas en esta fase de lectura.
     if (radarActivo) radarActivo.emitirOnda();
     if (forzar) {
@@ -6339,6 +6402,8 @@ window.addEventListener('radar:salida', () => {
   V = null;
   UI.setDataset(API.finalizar({actions:[],brands:{},months:[],categorias:[]}));
   estado.detalle = null;
+  retornoDetalle = null; rutaVistaActual = null; ++restauracionScroll;
+  estado.explorerLimite = CONFIG.datos.tamanoPagina;
   estado.focusMonth = ''; estado.compareA = ''; estado.compareB = ''; estado.rangoDesde = ''; estado.rangoHasta = '';
   estado.cargando = false; estado.error = null;
   API.invalidarCache();
@@ -6346,7 +6411,7 @@ window.addEventListener('radar:salida', () => {
   vistaPintada = false;
   Anim.barridoSync(false);
 });
-window.addEventListener('radar:fotos-actualizadas',()=>{if(V){UI.setDataset(V);render();}});
+window.addEventListener('radar:fotos-actualizadas',()=>{if(V){UI.setDataset(V);render({ conservarPosicion: true });}});
 window.addEventListener('radar:ingreso', () => {
   if (iniciado) sincronizar(true);
 });
@@ -6358,6 +6423,7 @@ async function iniciar() {
   aplicarPanel(panelInicial());
   document.addEventListener("keydown", e => { if (e.key === "Escape") cerrarMenu(); });
   Anim.init();
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   window.addEventListener("hashchange", aplicarHash);
   window.addEventListener("beforeunload", () => { liberarVista(); });
   sincronizar(false);
