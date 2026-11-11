@@ -2096,12 +2096,27 @@ t.sheetStubs=true}if(t.type=="array"){t.type="binary";var a=xk(e,t);t.type="arra
 .stats-head,.stats-actions,.stats-filters,.stats-table-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.stats-head{margin-bottom:24px;align-items:flex-start}.stats-head h1{font-size:clamp(28px,3vw,42px);margin:5px 0 8px;letter-spacing:-1px}.stats-eyebrow{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:700}.stats-muted{color:var(--muted);font-size:13px}.stats-actions{flex-shrink:0}.stats-actions a{text-decoration:none}.stats-filters{padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:18px;flex-wrap:wrap;justify-content:flex-start}.stats-filters>span{margin-left:auto}.stats-field{display:flex;align-items:center;gap:10px;font-size:13px}.stats-field select,.stats-table-head input{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--card);color:var(--ink);font:inherit}.stats-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:18px}.stats-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}.stats-kpi{display:flex;gap:16px;align-items:flex-start}.stats-kpi strong{display:block;font-size:34px;letter-spacing:-1px;line-height:1.5}.stats-kpi small{display:block;font-size:12px}.stats-icon{display:flex;padding:14px;border-radius:13px}.stats-tone-0{background:#efe8fc;color:#7B3FE4}.stats-tone-1{background:#e6f1fc;color:#00689a}.stats-tone-2{background:#e7f4e5;color:#238342}.stats-tone-3{background:#fff2d6;color:#986700}.stats-charts{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-bottom:18px}.stats-card h2{font-size:19px;margin:0 0 6px}.stats-bars{display:flex;height:180px;align-items:stretch;gap:10px;overflow-x:auto;padding-top:14px;margin-top:20px;background:repeating-linear-gradient(to top,transparent 0,transparent 44px,var(--line) 45px)}.stats-bar-col{min-width:28px;flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px}.stats-bar-track{height:130px;display:flex;align-items:flex-end;width:100%;justify-content:center}.stats-bar{background:#7B3FE4;width:min(32px,80%);border-radius:5px 5px 0 0;min-height:1px}.stats-empty{min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}.stats-empty p{max-width:330px;margin:0}.stats-rank{display:flex;width:100%;justify-content:space-between;align-items:center;gap:16px;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:14px 0;cursor:pointer;font:inherit;font-size:13px}.stats-rank b{color:#7B3FE4;background:#efe8fc;padding:6px 10px;border-radius:8px}.stats-table-head{margin-bottom:18px}.stats-table-scroll{overflow:auto;max-height:430px}.stats-table-scroll table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}.stats-table-scroll th{text-align:left;background:var(--paper);padding:12px;font-weight:600;position:sticky;top:0}.stats-table-scroll td{padding:14px 12px;border-bottom:1px solid var(--line)}.stats-person{display:flex;gap:10px;align-items:center}.stats-person small{display:block;margin-top:3px;font-size:11px}.stats-avatar{background:#efe8fc;color:#7B3FE4;padding:10px;border-radius:50%;font-weight:700}.stats-role{padding:5px 9px;background:#efe8fc;color:#7B3FE4;border-radius:12px}.stats-footnote{font-size:11px;color:var(--muted);padding:12px;background:var(--paper);border-radius:10px;margin-bottom:0}@media(max-width:1000px){.stats-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-head{flex-wrap:wrap}.stats-charts{grid-template-columns:1fr}}@media(max-width:600px){.stats-kpi{padding:14px;gap:8px}.stats-icon{padding:9px}.stats-kpi strong{font-size:26px}.stats-table-head{flex-wrap:wrap}.stats-field{width:100%;justify-content:space-between}.stats-field select{max-width:65%}}
 </style>
 <style>
-.radar-coincidencias{width:min(680px,calc(100% - 24px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--card,#fff);color:var(--ink,#171a22)}
-.radar-coincidencias::backdrop{background:#0f172a85}
-.radar-coincidencias-lista{max-height:50dvh;overflow:auto}
-.radar-coincidencias-lista article{border-left:3px solid #d69925;padding:10px 14px;margin:8px 0 16px;background:var(--paper,#f6f7f8)}
-.radar-coincidencias-lista article p{margin:6px 0}
-.radar-coincidencias-botones{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;padding-top:16px}
+dialog.radar-coincidencias{position:fixed;inset:0;margin:auto;height:fit-content;box-sizing:border-box;width:min(720px,calc(100% - 28px));max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);overflow:hidden;border:1px solid var(--line,#dfe3e8);border-radius:20px;padding:0;background:var(--card,#fff);color:var(--ink,#171a22);box-shadow:0 24px 80px #0f172a45;font-size:14px;text-align:left}
+dialog.radar-coincidencias[open]{display:flex;flex-direction:column}
+.radar-coincidencias::backdrop{background:#0f172a75}
+.radar-coincidencias-cabecera,.radar-coincidencias-lista,.radar-coincidencias-botones{padding:16px 24px}
+.radar-coincidencias-cabecera{border-bottom:1px solid var(--line,#dfe3e8);padding-right:60px}
+.radar-coincidencias-cabecera h3{margin:0;font-size:21px;line-height:1.25}
+.radar-coincidencias-cabecera p,.radar-coincidencias-meta{margin:5px 0 0;font-size:13px;opacity:.8}
+.radar-coincidencias-cerrar{position:absolute;top:12px;right:14px;border:0;background:none;color:inherit;padding:5px 10px;font:inherit;font-size:22px;cursor:pointer}
+.radar-coincidencias-lista{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.radar-coincidencias-lista section+section,.radar-coincidencias-lista article+article{margin-top:16px}
+.radar-coincidencias-lista h4{margin:5px 0;font-size:16px;overflow-wrap:anywhere}
+.radar-coincidencias-etiqueta{display:inline-block;border-radius:999px;background:#fff0cd;color:#75480a;font-size:12px;font-weight:700;padding:4px 9px}
+.radar-coincidencias-etiqueta.exacta{background:#ffe5e4;color:#8e2f32}
+.radar-coincidencias-tabla{width:100%;table-layout:fixed;border-collapse:collapse;margin:12px 0;font-size:13px}
+.radar-coincidencias-tabla th,.radar-coincidencias-tabla td{padding:7px 9px;border:1px solid var(--line,#dfe3e8);text-align:left;overflow-wrap:anywhere}
+.radar-coincidencias-tabla thead th{background:var(--paper,#f6f7f8)}
+.radar-coincidencias-tabla th:first-child{width:25%}
+.radar-coincidencias-sugerencia{margin:12px 0;padding:9px 12px;border-radius:9px;background:#fff6df;color:#684714;font-size:13px;overflow-wrap:anywhere}
+.radar-coincidencias-ficha{display:inline-block;margin-top:6px;text-decoration:underline;font-weight:650}
+.radar-coincidencias-botones{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--line,#dfe3e8)}
+@media(max-width:520px){.radar-coincidencias-cabecera,.radar-coincidencias-lista,.radar-coincidencias-botones{padding:12px}.radar-coincidencias-cabecera{padding-right:44px}.radar-coincidencias-botones .btn{flex:1 1 auto}}
 </style>
 </head>
 <body class="radar-sin-sesion">
@@ -5882,18 +5897,29 @@ function montarCaptura(ctx, alGuardar, opciones) {
       const fechaBonita=f=>/^\d{4}-\d{2}-\d{2}$/.test(f)?f.split('-').reverse().join('/'):f;
       const lista=h('div',{class:'radar-coincidencias-lista'},...r.avisos.map(aviso=>h('section',{},
         h('h4',{text:aviso.titulo}),
-        ...aviso.coincidencias.map(c=>h('article',{},
-          h('strong',{text:c.exacta?'Duplicado exacto':'Acción similar'}),
-          h('p',{text:c.exacta?'Te recomendamos quitar esta acción para evitar duplicados.':'Revisa si corresponde a la misma acción antes de guardarla.'}),
-          h('p',{text:(c.lote?'En este mismo archivo: ':((c.id?c.id+' · ':'')))+c.titulo}),
-          c.lote?null:h('p',{text:c.fechaCarga?'Cargada el '+fechaBonita(c.fechaCarga):'Fecha de carga no registrada'+(c.fechaAccion?' · Fecha de acción: '+fechaBonita(c.fechaAccion):'')}),
-          c.id?h('a',{href:'#/accion/'+encodeURIComponent(c.id),target:'_blank',rel:'noopener',text:'Ver ficha existente'}):null,
-          c.diferencias.length?h('ul',{},...c.diferencias.map(d=>h('li',{text:d.campo+': '+(d.anterior||'Sin dato')+' → '+(d.nueva||'Sin dato')}))):null,
-          c.diferencias.some(d=>d.campo==='Cadena')?h('p',{text:'Si es la misma acción en dos cadenas, considera registrarlas juntas.'}):null
-        ))
+        ...aviso.coincidencias.map(c=>{
+          const diferencias=c.diferencias;
+          const cadena=diferencias.find(d=>d.campo==='Cadena'&&d.anterior&&d.nueva);
+          const recomendacion=c.exacta?'Esta acción ya está registrada. Te recomendamos quitarla de la carga para evitar duplicados.':
+            cadena?'Si ambas corresponden a la misma acción, puedes registrarlas juntas e incluir ambas cadenas: '+cadena.anterior+' y '+cadena.nueva+'.':
+            'Si ambas corresponden a la misma acción, puedes reunir la información en un solo registro.';
+          return h('article',{},
+            h('span',{class:'radar-coincidencias-etiqueta'+(c.exacta?' exacta':''),text:c.exacta?'Duplicado exacto':'Acción similar'}),
+            h('p',{class:'radar-coincidencias-meta',text:(c.lote?'En este mismo archivo: ':(c.id?c.id+' · ':''))+c.titulo}),
+            c.lote?null:h('p',{class:'radar-coincidencias-meta',text:c.fechaCarga?'Cargada el '+fechaBonita(c.fechaCarga):'Fecha de carga no registrada'+(c.fechaAccion?' · Fecha de acción: '+fechaBonita(c.fechaAccion):'')}),
+            diferencias.length?h('table',{class:'radar-coincidencias-tabla','aria-label':'Diferencias entre las acciones'},
+              h('thead',{},h('tr',{},...['Campo',c.lote?'En el mismo archivo':'Ya registrada','Nueva acción'].map(t=>h('th',{scope:'col',text:t})))),
+              h('tbody',{},...diferencias.map(d=>h('tr',{},h('th',{scope:'row',text:d.campo}),h('td',{text:d.anterior||'Sin dato'}),h('td',{text:d.nueva||'Sin dato'}))))):null,
+            h('p',{class:'radar-coincidencias-sugerencia',text:'Sugerencia: '+(c.exacta&&c.lote?'Esta acción se repite en este archivo. Te recomendamos quitar una de las copias.':recomendacion)}),
+            c.id?h('a',{class:'radar-coincidencias-ficha',href:'#/accion/'+encodeURIComponent(c.id),target:'_blank',rel:'noopener',text:'Ver ficha existente'}):null
+          );
+        })
       )));
-      dialogo.append(h('h3',{text:'Revisa las coincidencias antes de guardar'}),
-        h('p',{text:'Tú decides si corriges o continúas con el guardado.'}),lista,
+      const total=r.avisos.length;
+      dialogo.append(h('div',{class:'radar-coincidencias-cabecera'},
+          h('h3',{text:total===1?'1 acción por revisar':total+' acciones por revisar'}),
+          h('p',{text:'Compara las coincidencias antes de guardar.'}),
+          h('button',{class:'radar-coincidencias-cerrar',type:'button','aria-label':'Cerrar y volver a revisar',text:'×',onclick:()=>terminar(false)})),lista,
         h('div',{class:'radar-coincidencias-botones'},
           h('button',{class:'btn ghost',type:'button',text:esLote?'Volver a revisar el Excel':'Volver al formulario',onclick:()=>terminar(false)}),
           h('button',{class:'btn',type:'button',text:'Guardar de todos modos',onclick:()=>terminar(true)})));
