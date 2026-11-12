@@ -5918,7 +5918,7 @@ function montarCaptura(ctx, alGuardar, opciones) {
       const total=r.avisos.length;
       dialogo.append(h('div',{class:'radar-coincidencias-cabecera'},
           h('h3',{text:total===1?'1 acción por revisar':total+' acciones por revisar'}),
-          h('p',{text:'Compara las coincidencias antes de guardar.'}),
+          h('p',{text:'Se comparan acciones del mismo día y de los 12 días anteriores a la fecha de cada acción nueva.'}),
           h('button',{class:'radar-coincidencias-cerrar',type:'button','aria-label':'Cerrar y volver a revisar',text:'×',onclick:()=>terminar(false)})),lista,
         h('div',{class:'radar-coincidencias-botones'},
           h('button',{class:'btn ghost',type:'button',text:esLote?'Volver a revisar el Excel':'Volver al formulario',onclick:()=>terminar(false)}),
